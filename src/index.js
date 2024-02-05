@@ -1,57 +1,37 @@
-console.log('%c HI', 'color: firebrick')
-
-const imgUrl = "https://dog.ceo/api/breeds/image/random/4";
-// on page load, fetches the images using the url above ⬆️
-// parses the response as JSON
-// adds image elements to the DOM for each 🤔 image in the array
-
+"use strict";
+console.log('%c HI', 'color: firebrick');
+const randomDogURL = "https://dog.ceo/api/breeds/image/random/4";
 const dogContainer = document.getElementById('dog-image-container');
-
-fetch(imgUrl)
+fetch(randomDogURL)
     .then(response => response.json())
-    .then(imagePopulator)
-
-function imagePopulator(apiReturn) {
-    // console.log(apiReturn)
-    let returnedDogs = apiReturn.message;
-    // console.log(returnedDogs)
-
-    for(const item of returnedDogs) {
-        // console.log(item)
+    .then(imagePopulator);
+function imagePopulator(dogImage) {
+    let returnedDogs = dogImage.message;
+    for (const item of returnedDogs) {
         let img = document.createElement('img');
         img.src = item;
-        dogContainer.append(img)
+        dogContainer === null || dogContainer === void 0 ? void 0 : dogContainer.appendChild(img);
     }
 }
-
-
-const breedUrl = "https://dog.ceo/api/breeds/list/all";
-
+const breedListURL = "https://dog.ceo/api/breeds/list/all";
 const dogUl = document.getElementById('dog-breeds');
-
-fetch(breedUrl)
+fetch(breedListURL)
     .then(response => response.json())
-    .then(breedLister)
-
-function breedLister(apiReturn) {
-    console.log(apiReturn)
-    console.log('apiReturn is a: '+typeof(apiReturn))
-    let returnedBreeds = apiReturn.message;
-    console.log(returnedBreeds)
-    console.log('returnedBreeds is a: '+typeof(returnedBreeds))
-
-    for(const item in returnedBreeds) {
+    .then(breedLister);
+function breedLister(breedList) {
+    let returnedBreeds = breedList.message;
+    for (const item in returnedBreeds) {
         let li = document.createElement('li');
         li.textContent = item;
-        li.style = 'color: red';
-        li.addEventListener('click', changeColor)
-        dogUl.append(li)
+        li.setAttribute('style', 'color: red;');
+        li.addEventListener('click', changeColor);
+        dogUl === null || dogUl === void 0 ? void 0 : dogUl.appendChild(li);
     }
 }
-
-function changeColor(clickEvent) {
-    let li = clickEvent.target;
-    li.style = 'color: blue'
+function changeColor(event) {
+    if (event.target instanceof HTMLElement) {
+        let li = event.target;
+        li.setAttribute('style', 'color: blue;');
+    }
 }
-
 const dropdown = document.getElementById('breed-dropdown');
